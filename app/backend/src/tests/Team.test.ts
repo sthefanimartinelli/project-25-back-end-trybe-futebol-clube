@@ -4,7 +4,9 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 
 import { app } from '../app';
-import Example from '../database/models/ExampleModel';
+// import Example from '../database/models/ExampleModel';
+import SequelizeTeam from '../database/models/SequelizeTeam';
+import TeamMock from './mocks/Team.Mock';
 
 import { Response } from 'superagent';
 
@@ -12,7 +14,7 @@ chai.use(chaiHttp);
 
 const { expect } = chai;
 
-describe('Seu teste', () => {
+describe('Testa os times', () => {
   /**
    * Exemplo do uso de stubs com tipos
    */
@@ -39,7 +41,11 @@ describe('Seu teste', () => {
   //   expect(...)
   // });
 
-  it('Seu sub-teste', () => {
-    expect(false).to.be.eq(true);
+  it('Testa se ao fazer um get para a rota /teams ele retorna todos os times cadastrados', async () => {
+    sinon.stub(SequelizeTeam, 'findAll').resolves(TeamMock.teams as any);
+    const { status, body } = await chai.request(app).get('/teams');
+
+    expect(status).to.equal(200);
+    expect(body).to.deep.equal(TeamMock.teams);
   });
 });
