@@ -1,15 +1,21 @@
 import * as express from 'express';
+import 'express-async-errors';
+import router from './routes';
 
 class App {
   public app: express.Express;
 
   constructor() {
     this.app = express();
-
     this.config();
+    this.routes();
 
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
+  }
+
+  private routes(): void {
+    this.app.use(router);
   }
 
   private config():void {
