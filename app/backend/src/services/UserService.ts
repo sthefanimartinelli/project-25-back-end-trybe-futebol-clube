@@ -1,13 +1,13 @@
-import { IToken } from '../Interfaces/IToken';
+// import { IToken } from '../Interfaces/IToken';
 import { IEncrypter } from '../Interfaces/IEncrypter';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
 import { IUserModel } from '../Interfaces/IUserModel';
+import JWTTokenGenerator from './JWTTokenGenerator';
 
 export default class UserService {
   constructor(
     private userModel: IUserModel,
     private encrypter: IEncrypter,
-    private token: IToken,
   ) { }
 
   public async login(email: string, password: string): Promise<ServiceResponse<{ token: string }>> {
@@ -23,7 +23,9 @@ export default class UserService {
       return { status: 'unauthorized', data: { message: 'Invalid email or password' } };
     }
 
-    const token = this.token.generate(user);
+    console.log('Hello');
+    const token = JWTTokenGenerator.generate(user);
+    console.log(token);
 
     return {
       status: 'successful',
