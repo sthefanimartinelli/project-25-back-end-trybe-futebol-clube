@@ -3,6 +3,7 @@ import { IEncrypter } from '../Interfaces/IEncrypter';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
 import { IUserModel } from '../Interfaces/IUserModel';
 import JWTTokenGenerator from './JWTTokenGenerator';
+import { IUser } from '../Interfaces/IUser';
 
 export default class UserService {
   constructor(
@@ -31,5 +32,13 @@ export default class UserService {
       status: 'successful',
       data: { token },
     };
+  }
+
+  public async findById(id: number): Promise<ServiceResponse<IUser>> {
+    const user = await this.userModel.findById(id);
+    if (!user) return { status: 'notFound', data: { message: 'User not found' } };
+    const { username, role, email, password } = user as IUser;
+
+    return { status: 'successful', data: { id, username, role, email, password } };
   }
 }

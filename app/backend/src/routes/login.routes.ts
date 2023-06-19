@@ -5,6 +5,7 @@ import EncrypterBcrypt from '../services/EncrypterBcrypt';
 import UserService from '../services/UserService';
 import UserModel from '../models/UserModel';
 import LoginValidations from '../middlewares/LoginValidations';
+import TokenValidation from '../middlewares/TokenValidation';
 
 const userModel = new UserModel();
 const encrypter = new EncrypterBcrypt();
@@ -15,7 +16,7 @@ const userController = new UserController(userService);
 const router = Router();
 
 const { validateEmail, validatePassword, validateLogin } = LoginValidations;
-// const { validateToken } = LoginValidations;
+const { validateToken } = TokenValidation;
 
 router.post(
   '/',
@@ -25,10 +26,10 @@ router.post(
   (req: Request, res: Response) => userController.login(req, res),
 );
 
-// router.get(
-//   '/role',
-//   validateToken,
-//   (req: Request, res: Response) => userController.getRoleInfo(req, res),
-// );
+router.get(
+  '/role',
+  validateToken,
+  (req: Request, res: Response) => userController.getRoleInfo(req, res),
+);
 
 export default router;
