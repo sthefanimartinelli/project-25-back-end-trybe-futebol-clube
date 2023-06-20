@@ -1,5 +1,8 @@
 import { Request, Router, Response } from 'express';
 import MatchController from '../controllers/MatchController';
+import TokenValidation from '../middlewares/TokenValidation';
+
+const { validateToken } = TokenValidation;
 
 const matchController = new MatchController();
 
@@ -11,11 +14,18 @@ router.get('/', (req: Request, res: Response) => {
     return matchController.getAllMatches(req, res);
   }
   if (inProgress === 'true') {
-    console.log('Hello');
     return matchController.getMatchesInProgress(req, res);
   }
   return matchController.getMatchesFinished(req, res);
 });
-// router.get('/', (req: Request, res: Response) => );
+
+router.patch('/:id/finish', validateToken, (req: Request, res: Response) =>
+  matchController.changeMatchStatus(req, res));
+
+router.patch('/:id', validateToken, (req: Request, res: Response) =>
+  matchController.updateMatch(req, res));
+
+router.post('/', validateToken, (req: Request, res: Response) =>
+  matchController.createMatch(req, res));
 
 export default router;

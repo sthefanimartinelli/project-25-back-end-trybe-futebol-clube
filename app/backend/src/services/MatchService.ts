@@ -19,4 +19,27 @@ export default class MatchService {
     const matchesFinished = await this.matchModel.getMatchesFinished();
     return { status: 'successful', data: matchesFinished };
   }
+
+  public async changeMatchStatus(id: number): Promise<ServiceResponse<string>> {
+    await this.matchModel.changeMatchStatus(id);
+    return { status: 'successful', data: '' };
+  }
+
+  public async updateMatch(id: number, homeTeamGoals: number, awayTeamGoals: number):
+  Promise<ServiceResponse<string>> {
+    await this.matchModel.updateMatch(id, homeTeamGoals, awayTeamGoals);
+    return { status: 'successful', data: '' };
+  }
+
+  public async createMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ):
+    Promise<ServiceResponse<IMatch>> {
+    const newMatch = await this.matchModel
+      .createMatch(homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals);
+    return { status: 'successful', data: newMatch };
+  }
 }

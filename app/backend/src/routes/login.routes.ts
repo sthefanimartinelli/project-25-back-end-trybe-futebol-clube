@@ -9,7 +9,6 @@ import TokenValidation from '../middlewares/TokenValidation';
 
 const userModel = new UserModel();
 const encrypter = new EncrypterBcrypt();
-// const tokenGenerator = new JWTTokenGenerator();
 const userService = new UserService(userModel, encrypter);
 const userController = new UserController(userService);
 

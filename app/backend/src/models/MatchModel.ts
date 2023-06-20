@@ -51,4 +51,26 @@ export default class MatchModel {
     });
     return dbData;
   }
+
+  async changeMatchStatus(id: number) {
+    await this.model.update({ inProgress: false }, { where: { id } });
+  }
+
+  async updateMatch(id: number, newHomeGoals: number, newAwayGoals: number) {
+    await this.model.update(
+      { homeTeamGoals: newHomeGoals, awayTeamGoals: newAwayGoals },
+      { where: { id } },
+    );
+  }
+
+  async createMatch(
+    homeTeamId: number,
+    awayTeamId: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
+  ): Promise<IMatch> {
+    const matchInfo = { homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals, inProgress: true };
+    const dbData = await this.model.create(matchInfo);
+    return dbData;
+  }
 }
