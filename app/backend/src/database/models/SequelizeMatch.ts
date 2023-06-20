@@ -51,7 +51,7 @@ SequelizeMatch.init({
   awayTeamGoals: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    field: 'away_team_id',
+    field: 'away_team_goals',
   },
   inProgress: {
     type: DataTypes.BOOLEAN,
@@ -65,13 +65,13 @@ SequelizeMatch.init({
   timestamps: false,
 });
 
-SequelizeMatch.hasMany(SequelizeTeam, {
+SequelizeMatch.belongsTo(SequelizeTeam, {
   foreignKey: 'homeTeamId',
-  as: 'homeTeams',
+  as: 'homeTeam',
 });
-SequelizeMatch.hasMany(SequelizeTeam, {
+SequelizeMatch.belongsTo(SequelizeTeam, {
   foreignKey: 'awayTeamId',
-  as: 'awayTeams',
+  as: 'awayTeam',
 });
 
 export default SequelizeMatch;
