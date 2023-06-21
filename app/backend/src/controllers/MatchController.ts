@@ -53,4 +53,9 @@ export default class MatchController {
       .createMatch(homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals);
     res.status(201).json(serviceResponse.data);
   }
+
+  public async getLeaderboard(_req: Request, res: Response) {
+    const serviceResponse = await this.matchService.getLeaderboard();
+    res.status(200).json(serviceResponse.data);
+  }
 }

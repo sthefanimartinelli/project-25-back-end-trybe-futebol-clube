@@ -1,3 +1,4 @@
+import { ILeaderboard } from '../Interfaces/ILeaderboard';
 import MatchModel from '../models/MatchModel';
 import { IMatch } from '../Interfaces/IMatch';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
@@ -41,5 +42,10 @@ export default class MatchService {
     const newMatch = await this.matchModel
       .createMatch(homeTeamId, awayTeamId, homeTeamGoals, awayTeamGoals);
     return { status: 'successful', data: newMatch };
+  }
+
+  public async getLeaderboard(): Promise<ServiceResponse<ILeaderboard[]>> {
+    const leaderboard = await this.matchModel.getLeaderboard();
+    return { status: 'successful', data: leaderboard };
   }
 }
