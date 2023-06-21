@@ -48,4 +48,9 @@ export default class MatchService {
     const leaderboard = await this.matchModel.getLeaderboard();
     return { status: 'successful', data: leaderboard };
   }
+
+  public async getLeaderboardAway(): Promise<ServiceResponse<ILeaderboard[]>> {
+    const leaderboard = await this.matchModel.getLeaderboardAway();
+    return { status: 'successful', data: leaderboard };
+  }
 }

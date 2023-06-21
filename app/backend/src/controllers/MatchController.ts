@@ -58,4 +58,9 @@ export default class MatchController {
     const serviceResponse = await this.matchService.getLeaderboard();
     res.status(200).json(serviceResponse.data);
   }
+
+  public async getLeaderboardAway(_req: Request, res: Response) {
+    const serviceResponse = await this.matchService.getLeaderboardAway();
+    res.status(200).json(serviceResponse.data);
+  }
 }

@@ -6,5 +6,6 @@ const matchController = new MatchController();
 const router = Router();
 
 router.get('/home', (req: Request, res: Response) => matchController.getLeaderboard(req, res));
+router.get('/away', (req: Request, res: Response) => matchController.getLeaderboardAway(req, res));
 
 export default router;
