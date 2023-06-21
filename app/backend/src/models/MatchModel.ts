@@ -2,6 +2,7 @@ import SequelizeTeam from '../database/models/SequelizeTeam';
 import SequelizeMatch from '../database/models/SequelizeMatch';
 import { IMatch } from '../Interfaces/IMatch';
 import { ILeaderboard } from '../Interfaces/ILeaderboard';
+import sortedArray from '../utils/sortArray';
 
 export default class MatchModel {
   private model = SequelizeMatch;
@@ -92,7 +93,9 @@ export default class MatchModel {
         efficiency: MatchModel.getEfficiency(team.id, finishedMatches),
       }
     ));
-    return newArr;
+
+    const sortedArr = sortedArray(newArr);
+    return sortedArr;
   }
 
   static getFilteredMatches(teamId: number, finishedMatches: IMatch[]): IMatch[] {
@@ -158,10 +161,10 @@ export default class MatchModel {
     return goalsInFavor - goalsOwn;
   }
 
-  static getEfficiency(teamId: number, finishedMatches: IMatch[]): number {
+  static getEfficiency(teamId: number, finishedMatches: IMatch[]): string {
     const games = MatchModel.getTotalGames(teamId, finishedMatches);
     const points = MatchModel.getTotalPoints(teamId, finishedMatches);
     const result = (points / (games * 3)) * 100;
-    return Number(result.toFixed(2));
+    return result.toFixed(2);
   }
 }
