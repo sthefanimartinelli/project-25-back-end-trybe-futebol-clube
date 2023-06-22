@@ -24,9 +24,7 @@ export default class UserService {
       return { status: 'unauthorized', data: { message: 'Invalid email or password' } };
     }
 
-    console.log('Hello');
     const token = JWTTokenGenerator.generate(user);
-    console.log(token);
 
     return {
       status: 'successful',
